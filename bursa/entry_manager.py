@@ -3,7 +3,9 @@
 Entry Management Functionality
 """
 import os
-import json
+import datetime
+from dateutil.relativedelta import *
+from datetime import date
 from rest_framework.views import APIView
 from models import Entry
 
@@ -149,4 +151,24 @@ class EntryManager(APIView):
         status = 200
         return response, status
 
+    def get_expenses(self, sortby):
+        """
 
+        :param sortby:
+        :return:
+        """
+        all_entries = Entry.objects.all().values('amount')
+        response, temp = {}, []
+        expenses = {}
+        #for x_temp in all_entries:
+        total = sum([i['amount'] for i in all_entries])
+        print "$$$$$$$$$$$$$$", total
+        today_ex = Entry.objects.filter(date__date=date.today()).values('amount')
+        today_total = sum([i['amount'] for i in today_ex])
+        print "today ", today_total
+
+        pre_date = str(datetime.now() + relativedelta(months=-1))
+        print "ghutyutru", pre_date
+        last_month = Entry.objects.filter(date__gt=pre_date).values('amount')
+        last_month_ex = sum([i['amount'] for i in last_month])
+        print "last month ", last_month_ex

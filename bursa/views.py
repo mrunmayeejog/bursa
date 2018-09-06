@@ -166,3 +166,33 @@ class EntryOperations(APIView):
             response['error'] = 'Failed to update record'
             response['message'] = "Exception : %s " % (str(exception))
             return HttpResponseBadRequest(json.dumps(response))
+
+class ViewExpenses(APIView):
+    """
+    Class for viewing expenses based on daily/weekly/monthly basis
+    """
+
+    def get(self, request):
+        """
+        Update JSON details to specified Entry id.
+        :param request: HttpRequest (Put) to update specific Entry
+        :param entry_id: Entry id to update Entry
+        :return: HttpResponse with successfully update message or
+                 HttpResponseBadRequest for bad request or HttpResponseNotFound for invalid input
+        """
+        response, status = dict(), None
+
+        try:
+            sortby = request.build_absolute_uri().split("/")[-1]
+            temp_obj = EntryManager()
+            response, status = temp_obj.get_expenses(sortby)
+            if status == 200:
+                return HttpResponse(json.dumps(response))
+            if status == 400:
+                return HttpResponseBadRequest(json.dumps(response))
+            if status == 404:
+                return HttpResponseNotFound(json.dumps(response))
+        except Exception as exception:
+            response['error'] = 'Failed to update record'
+            response['message'] = "Exception : %s " % (str(exception))
+            return HttpResponseBadRequest(json.dumps(response))
