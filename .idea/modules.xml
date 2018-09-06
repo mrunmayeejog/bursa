@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/bursa.iml" filepath="$PROJECT_DIR$/.idea/bursa.iml" />
+      <module fileurl="file://$USER_HOME$/Downloads/deepInsight-20180906T160412Z-001/deepInsight/.idea/deepInsight.iml" filepath="$USER_HOME$/Downloads/deepInsight-20180906T160412Z-001/deepInsight/.idea/deepInsight.iml" />
+    </modules>
+  </component>
+</project>
