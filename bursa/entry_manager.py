@@ -3,13 +3,19 @@
 Entry Management Functionality
 """
 import os
+import string
+import random
 import datetime
 from dateutil.relativedelta import *
 from datetime import date
 from rest_framework.views import APIView
-from models import Entry
+from bursa.models import Entry
 
 __name__ = 'EntryManager'
+
+
+def random_generator(size=10, chars=string.ascii_lowercase + string.digits):
+    return ''.join(random.choice(chars) for x in range(size))
 
 
 class EntryManager(APIView):
@@ -37,7 +43,6 @@ class EntryManager(APIView):
                          "created_date": x_temp.date.isoformat()})
         return temp
 
-
     @staticmethod
     def upload_new_entry(entry_data):
         """
@@ -46,7 +51,7 @@ class EntryManager(APIView):
         :return: Status and message for JSON upload operation
         """
         response = dict()
-        entry_id = os.urandom(4).encode('hex')
+        entry_id = random_generator()
         record = Entry()
         record.id = entry_id
         record.amount = entry_data.get('amount', '0.0')
@@ -95,10 +100,8 @@ class EntryManager(APIView):
         Get specific Entry details
         :return: Entry JSON for specific Entry
         """
-        print "in get Entry"
         response = dict()
         x_temp = Entry.objects.filter(id=entry_id)
-        print x_temp
         if len(x_temp) == 0:
             response['error'] = 'Invalid Entry Id.'
             status = 404
@@ -140,7 +143,6 @@ class EntryManager(APIView):
         """
         x_temp = Entry.objects.filter(id=entry_id)
         response = dict()
-        print "in delete"
         if len(x_temp) == 0:
             response['error'] = 'Invalid Entry Id.'
             status = 404
@@ -151,24 +153,23 @@ class EntryManager(APIView):
         status = 200
         return response, status
 
-    def get_expenses(self, sortby):
+    def get_expenses(self, expenditure_type):
         """
+        Get expenditures based on daily/weekly/monthly
 
-        :param sortby:
+        :param expenditure_type:
         :return:
         """
-        all_entries = Entry.objects.all().values('amount')
-        response, temp = {}, []
-        expenses = {}
-        #for x_temp in all_entries:
-        total = sum([i['amount'] for i in all_entries])
-        print "$$$$$$$$$$$$$$", total
-        today_ex = Entry.objects.filter(date__date=date.today()).values('amount')
-        today_total = sum([i['amount'] for i in today_ex])
-        print "today ", today_total
+        if expenditure_type == 'daily':
+            all_entries = Entry.objects.all().values('amount')
+            response = dict()
+            # total = sum([i['amount'] for i in all_entries])
+            today_ex = Entry.objects.filter(date__date=date.today()).values('amount')
+            today_total = sum([i['amount'] for i in today_ex])
+            response = {"total_expense": today_total}
+            status = 200
+            return response, status
 
-        pre_date = str(datetime.now() + relativedelta(months=-1))
-        print "ghutyutru", pre_date
-        last_month = Entry.objects.filter(date__gt=pre_date).values('amount')
-        last_month_ex = sum([i['amount'] for i in last_month])
-        print "last month ", last_month_ex
+            pre_date = str(datetime.now() + relativedelta(months=-1))
+            last_month = Entry.objects.filter(date__gt=pre_date).values('amount')
+            last_month_ex = sum([i['amount'] for i in last_month])

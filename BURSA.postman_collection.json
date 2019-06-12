@@ -1,0 +1,170 @@
+{
+	"info": {
+		"_postman_id": "df20f6ea-5e2a-1b3d-19e8-d5d1376a9b38",
+		"name": "BURSA",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "List records",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000"
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add new record",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"place\" : \"HT\",\n\"catefory\" : \"grocery\",\n\"amount\": 23.00\n}"
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000"
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete record",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/<entry-id>",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"<entry-id>"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get record",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/<entry-id>",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"<entry-id>"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get type of record",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/<entry-id>/type",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"<entry-id>",
+						"type"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update record",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"place\" : \"HT\",\n\"category\" : \"grocery\",\n\"amount\": 26.00,\n\"type\" : \"D\"\n}"
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/<entry-id>",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"<entry-id>"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Daily Expense",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/daily",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"daily"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
