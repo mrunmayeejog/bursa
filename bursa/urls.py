@@ -31,4 +31,5 @@ urlpatterns = [
     # Entry operations like get, delete, update Entry
     url(r'^(?P<entry_id>.+)$', views.EntryOperations.as_view(), name='Entry_operations'),
     url(r'/daily$', views.EntryOperations.as_view(), name='Entry_operations'),
+    url(r'/monthly$', views.EntryOperations.as_view(), name='Entry_operations')
 ]

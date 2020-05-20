@@ -5,11 +5,11 @@ Entry Management Functionality
 import os
 import string
 import random
-import datetime
-from dateutil.relativedelta import *
-from datetime import date
+from datetime import datetime, date
+from dateutil import relativedelta
 from rest_framework.views import APIView
 from bursa.models import Entry
+
 
 __name__ = 'EntryManager'
 
@@ -29,14 +29,14 @@ class EntryManager(APIView):
     @staticmethod
     def list_entry():
         """
-        Method to list all Entrys
-        :return: List of Entrys with meta information
+        Method to list all Entries
+        :return: List of Entries with meta information
         """
 
-        # Read all Entrys from database
+        # Read all Entries from database
         all_entries = Entry.objects.all()
         response, temp = {}, []
-        # Add all Entrys to response
+        # Add all Entries to response
         for x_temp in all_entries:
             temp.append({"record_id": x_temp.id, "type": x_temp.type,
                          "amount": x_temp.amount, "place": x_temp.place, "category" : x_temp.category,
@@ -109,7 +109,7 @@ class EntryManager(APIView):
 
         response = {"record_id": x_temp[0].id, "type": x_temp[0].type,
                          "amount": x_temp[0].amount, "place": x_temp[0].place, "category" : x_temp[0].category,
-                         "created_date": x_temp[0].date.isoformat()}
+                         "date": x_temp[0].date.isoformat()}
         status = 200
         return response, status
 
@@ -163,13 +163,17 @@ class EntryManager(APIView):
         if expenditure_type == 'daily':
             all_entries = Entry.objects.all().values('amount')
             response = dict()
-            # total = sum([i['amount'] for i in all_entries])
             today_ex = Entry.objects.filter(date__date=date.today()).values('amount')
             today_total = sum([i['amount'] for i in today_ex])
+
             response = {"total_expense": today_total}
             status = 200
             return response, status
 
-            pre_date = str(datetime.now() + relativedelta(months=-1))
-            last_month = Entry.objects.filter(date__gt=pre_date).values('amount')
+        if expenditure_type == 'monthly':
+            pre_date = date.today()
+            last_month = Entry.objects.filter(date__month=pre_date.month).values('amount')
             last_month_ex = sum([i['amount'] for i in last_month])
+            response = {"Monthly_expense": last_month_ex}
+            status = 200
+            return response, status

@@ -100,7 +100,7 @@ class EntryOperations(APIView):
             response, status = dict(), None
             temp_obj = EntryManager()
             ex_type = request.build_absolute_uri().split("/")[-1]
-            if ex_type == 'daily':
+            if ex_type == 'daily' or ex_type == 'monthly':
                 response, status = temp_obj.get_expenses(ex_type)
             else:
                 response, status = temp_obj.get_entry(entry_id)
@@ -184,6 +184,7 @@ class EntryOperations(APIView):
 #
 #         try:
 #             expenditure_type = request.build_absolute_uri().split("/")[-1]
+#             print("::::::" +str(expenditure_type))
 #             temp_obj = EntryManager()
 #             response, status = temp_obj.get_expenses(expenditure_type)
 #             if status == 200:

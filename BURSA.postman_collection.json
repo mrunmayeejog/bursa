@@ -165,6 +165,29 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Monthly Expense",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/monthly",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"monthly"
+					]
+				}
+			},
+			"response": []
 		}
-	]
+	],
+	"protocolProfileBehavior": {}
 }

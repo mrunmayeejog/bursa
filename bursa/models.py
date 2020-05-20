@@ -1,5 +1,5 @@
 from __future__ import unicode_literals
-
+from datetime import datetime
 from django.db import models
 
 
@@ -16,7 +16,7 @@ class Entry(models.Model):
     id = models.CharField(max_length=60, primary_key=True)
     amount = models.FloatField()
     type = models.CharField(max_length=1, choices=Entry_TYPE)
-    date = models.DateTimeField(auto_now_add=True, blank=True)
+    date = models.DateTimeField(default=datetime.now())
     category = models.CharField(max_length=60, blank=False, unique=False)
     place = models.CharField(max_length=60, blank=False, unique=False)
 
